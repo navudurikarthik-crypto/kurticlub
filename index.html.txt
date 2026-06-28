@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zevana Luxury Atelier</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+            font-family: 'Cinzel', serif, sans-serif;
+            overflow-x: hidden;
+        }
+        .luxury-gradient {
+            background: linear-gradient(180deg, rgba(18,18,18,1) 0%, rgba(10,10,10,1) 100%);
+        }
+        /* Premium card hover effects */
+        .product-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+    </style>
+</head>
+<body class="luxury-gradient min-h-screen">
+
+    <header class="w-full py-6 px-12 flex justify-between items-center border-b border-stone-800 backdrop-blur-md sticky top-0 z-50">
+        <div class="text-xl tracking-widest font-light text-amber-500 font-serif">ZEVANA</div>
+        <nav class="hidden md:flex space-x-8 text-xs tracking-widest text-stone-400">
+            <a href="#" class="hover:text-amber-400 transition-colors">COLLECTIONS</a>
+            <a href="#" class="hover:text-amber-400 transition-colors">THE ATELIER</a>
+            <a href="#" class="hover:text-amber-400 transition-colors">ABOUT</a>
+        </nav>
+        <div class="text-xs tracking-widest border border-stone-700 px-4 py-2 rounded-full text-stone-300">
+            HYDERABAD
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="text-center mb-16">
+            <h1 id="hero-title" class="text-4xl md:text-6xl font-extralight tracking-wide text-stone-100 mb-4 opacity-0">
+                The Heritage Collection
+            </h1>
+            <p class="text-stone-500 text-xs tracking-widest uppercase">Automated Real-Time Luxury Curation</p>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div id="loading-text" class="col-span-full text-center text-stone-500 tracking-widest py-12">
+                Connecting to secure vault database...
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- 1. CONFIGURATION: PASTE YOUR SHEET.BEST API LINK HERE ---
+        const SHEET_BEST_URL = 'YOUR_SHEET_BEST_API_URL_HERE'; 
+
+        // Fallback Sample Data if database link isn't pasted yet
+        const sampleProducts = [
+            { Product_Name: "Pure Kanjeevaram Silk Lehenga", Price: "₹1,20,000", Image_URL: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80" },
+            { Product_Name: "Hand-Woven Banarasi Heritage Sari", Price: "₹85,000", Image_URL: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80" },
+            { Product_Name: "Crimson Velvet Bridal Anarkali", Price: "₹1,65,000", Image_URL: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" }
+        ];
+
+        // --- 2. DATABASE FETCH FUNCTION ---
+        async function loadLuxuryProducts() {
+            const grid = document.getElementById('product-grid');
+            let products = sampleProducts;
+
+            if (SHEET_BEST_URL !== 'YOUR_SHEET_BEST_API_URL_HERE') {
+                try {
+                    const response = await fetch
